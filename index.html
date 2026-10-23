@@ -1,14 +1,124 @@
+
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090b08"><title>Voto Consciente</title>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b08">
+<title>Voto Consciente</title>
 <style>
-:root{--bg:#090b08;--panel:#11150f;--lime:#c7ff38;--text:#f4f7ef;--muted:#aab3a2;--line:#30392a}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,sans-serif}main{max-width:680px;margin:auto;padding:22px 16px 48px}.top{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:28px}.brand,.kicker{color:var(--lime);font-weight:800;letter-spacing:.1em}.brand{font-size:13px}.tag,.muted,p{color:var(--muted)}h1{font-size:clamp(30px,7vw,46px);line-height:1.05;letter-spacing:-.04em}h2{font-size:23px;line-height:1.2}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0}.meta{display:flex;justify-content:space-between;color:var(--lime);font-size:12px}.track,.bar{height:6px;background:#293023;border-radius:9px;overflow:hidden;margin:12px 0 22px}.fill,.bar span{display:block;height:100%;background:var(--lime)}.question{font-size:clamp(21px,5vw,28px);line-height:1.3;margin:24px 0}.answers,.controls{display:flex;gap:12px}.answers button,.btn{flex:1;border:1px solid #48513f;background:#191e16;color:var(--text);padding:15px;border-radius:12px;font-weight:800;cursor:pointer}.answers button.selected,.btn.primary{background:var(--lime);color:#11150c;border-color:var(--lime)}.btn.secondary{background:transparent}.btn:disabled{opacity:.35}.hidden{display:none!important}.small{font-size:12px}.score{font-size:62px;color:var(--lime);font-weight:900}.scale{display:grid;grid-template-columns:1fr 1fr;gap:5px}.scale div{text-align:center;padding:9px 3px;border:1px solid var(--line);border-radius:8px;font-size:11px;color:var(--muted)}.scale .active{border-color:var(--lime);color:var(--lime)}details{border-top:1px solid var(--line);padding:13px 0}summary{cursor:pointer;font-weight:700}a{color:var(--lime)}.result-image-wrap{margin:18px 0 8px}.result-image{display:block;width:100%;max-height:340px;object-fit:cover;object-position:center;border-radius:12px;border:1px solid var(--line)}.image-caption{font-size:12px;margin:8px 0 0;color:var(--muted)}footer{text-align:center;color:#818a79;font-size:12px;margin-top:30px}@media(max-width:420px){.card{padding:18px}}
-</style></head><body><main>
-<header class="top"><div class="brand">▰ VOTO CONSCIENTE</div><div class="tag">QUIZ POLÍTICO</div></header>
-<section id="intro"><div class="kicker">AUTOCONHECIMENTO POLÍTICO</div><h1>Com quais ideias você se identifica?</h1><p>Responda a perguntas sobre economia, direitos, segurança e serviços públicos. O resultado mostra uma afinidade aproximada com posições políticas — não define sua identidade nem recomenda candidato.</p><div class="card"><h2>Como interpretar</h2><p>As perguntas apresentam posições diferentes sem tratar um lado como moralmente superior. O resultado indicará maior afinidade com esquerda ou extrema direita. Este é um quiz simplificado e não substitui uma análise aprofundada das posições políticas.</p><button class="btn primary" id="start">Começar →</button></div></section>
-<section id="game" class="hidden"><div class="meta"><span id="counter"></span><span id="pct"></span></div><div class="track"><div class="fill" id="progress"></div></div><div class="card"><div class="muted small" id="topic"></div><div class="question" id="question"></div><div class="answers"><button data-a="sim">SIM</button><button data-a="nao">NÃO</button></div><div class="controls" style="margin-top:18px"><button class="btn secondary" id="back">← Voltar</button><button class="btn primary" id="next" disabled>Próxima →</button></div></div><p class="small">As respostas ficam nesta página e não são enviadas a um servidor.</p></section>
-<section id="result" class="hidden"><div class="kicker">SEU RESULTADO</div><h1>Sua afinidade política</h1><div class="card"><div class="score" id="score"></div><h2 id="title"></h2><p id="copy"></p><div class="result-image-wrap"><img id="result-image" class="result-image" src="./lula.jpg" alt="Imagem ilustrativa associada à faixa de afinidade política"><p class="image-caption" id="result-image-caption">Imagem ilustrativa; não representa endosso nem recomendação de voto.</p></div><div class="bar"><span id="bar"></span></div><div class="scale"><div id="left">ESQUERDA</div><div id="extreme">EXTREMA DIREITA</div></div><p class="small">Índice orientativo baseado apenas nas respostas deste quiz. Não é uma medição científica nem um diagnóstico ideológico.</p></div>
-<div class="card"><h2>O que significam esses termos?</h2><p><b style="color:var(--lime)">Esquerda:</b> costuma enfatizar a redução das desigualdades, a proteção social, os serviços públicos e a redistribuição de renda.</p><p><b style="color:var(--lime)">Extrema direita:</b> é uma categoria política distinta da direita convencional, frequentemente analisada em relação a autoritarismo, nacionalismo excludente, pluralismo e direitos. As posições variam entre movimentos e países.</p><p class="small">Este quiz simplificado não é uma medição científica. O resultado indica apenas a faixa de afinidade definida pelas respostas e não substitui uma análise aprofundada.</p></div>
-<div class="card"><h2>Fontes para conhecer os temas</h2><p>Os links abaixo são fontes de referência para pesquisa. Eles contextualizam os assuntos, mas não provam que um candidato defenda exatamente cada posição. Consulte propostas oficiais e reportagens com data e contexto.</p><div id="sources"></div></div><div class="controls"><button class="btn primary" id="restart">Refazer ↻</button><button class="btn secondary" id="share">Compartilhar</button></div></section><footer>VOTO CONSCIENTE · Informe-se. Questione. Escolha.</footer></main>
+:root{--bg:#090b08;--panel:#11150f;--lime:#c7ff38;--text:#f4f7ef;--muted:#aab3a2;--line:#30392a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,sans-serif}
+main{max-width:680px;margin:auto;padding:22px 16px 48px}
+.top{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:28px}
+.brand,.kicker{color:var(--lime);font-weight:800;letter-spacing:.1em}
+.brand{font-size:13px}
+.tag,.muted,p{color:var(--muted)}
+h1{font-size:clamp(30px,7vw,46px);line-height:1.05;letter-spacing:-.04em}
+h2{font-size:23px;line-height:1.2}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0}
+.meta{display:flex;justify-content:space-between;color:var(--lime);font-size:12px}
+.track,.bar{height:6px;background:#293023;border-radius:9px;overflow:hidden;margin:12px 0 22px}
+.fill,.bar span{display:block;height:100%;background:var(--lime)}
+.question{font-size:clamp(21px,5vw,28px);line-height:1.3;margin:24px 0}
+.answers,.controls{display:flex;gap:12px}
+.answers button,.btn{flex:1;border:1px solid #48513f;background:#191e16;color:var(--text);padding:15px;border-radius:12px;font-weight:800;cursor:pointer}
+.answers button.selected,.btn.primary{background:var(--lime);color:#11150c;border-color:var(--lime)}
+.btn.secondary{background:transparent}
+.btn:disabled{opacity:.35}
+.hidden{display:none!important}
+.small{font-size:12px}
+.score{font-size:62px;color:var(--lime);font-weight:900}
+.scale{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.scale div{text-align:center;padding:9px 3px;border:1px solid var(--line);border-radius:8px;font-size:11px;color:var(--muted)}
+.scale .active{border-color:var(--lime);color:var(--lime)}
+details{border-top:1px solid var(--line);padding:13px 0}
+summary{cursor:pointer;font-weight:700}
+a{color:var(--lime)}
+.result-image-wrap{margin:18px 0 8px}
+.result-image{display:block;width:100%;max-height:340px;object-fit:cover;object-position:center;border-radius:12px;border:1px solid var(--line)}
+.image-caption{font-size:12px;margin:8px 0 0;color:var(--muted)}
+footer{text-align:center;color:#818a79;font-size:12px;margin-top:30px}
+@media(max-width:420px){.card{padding:18px}}
+</style>
+</head>
+<body>
+<main>
+<header class="top">
+<div class="brand">▰ VOTO CONSCIENTE</div>
+<div class="tag">QUIZ POLÍTICO</div>
+</header>
+
+<section id="intro">
+<div class="kicker">AUTOCONHECIMENTO POLÍTICO</div>
+<h1>Com quais ideias você se identifica?</h1>
+<p>Responda a perguntas sobre economia, direitos, segurança e serviços públicos. O resultado mostra uma afinidade aproximada com posições políticas — não define sua identidade nem recomenda candidato.</p>
+<div class="card">
+<h2>Como interpretar</h2>
+<p>As perguntas apresentam posições diferentes sem tratar um lado como moralmente superior. O resultado indicará maior afinidade com esquerda ou extrema direita. Este é um quiz simplificado e não substitui uma análise aprofundada das posições políticas.</p>
+<button class="btn primary" id="start">Começar →</button>
+</div>
+</section>
+
+<section id="game" class="hidden">
+<div class="meta"><span id="counter"></span><span id="pct"></span></div>
+<div class="track"><div class="fill" id="progress"></div></div>
+<div class="card">
+<div class="muted small" id="topic"></div>
+<div class="question" id="question"></div>
+<div class="answers">
+<button data-a="sim">SIM</button>
+<button data-a="nao">NÃO</button>
+</div>
+<div class="controls" style="margin-top:18px">
+<button class="btn secondary" id="back">← Voltar</button>
+<button class="btn primary" id="next" disabled>Próxima →</button>
+</div>
+</div>
+<p class="small">As respostas ficam nesta página e não são enviadas a um servidor.</p>
+</section>
+
+<section id="result" class="hidden">
+<div class="kicker">SEU RESULTADO</div>
+<h1>Sua afinidade política</h1>
+<div class="card">
+<div class="score" id="score"></div>
+<h2 id="title"></h2>
+<p id="copy"></p>
+<div class="result-image-wrap">
+<img id="result-image" class="result-image" src="./lula.jpeg" alt="Imagem ilustrativa associada à faixa de afinidade política">
+<p class="image-caption" id="result-image-caption">Imagem ilustrativa; não representa endosso nem recomendação de voto.</p>
+</div>
+<div class="bar"><span id="bar"></span></div>
+<div class="scale">
+<div id="left">ESQUERDA</div>
+<div id="extreme">EXTREMA DIREITA</div>
+</div>
+<p class="small">Índice orientativo baseado apenas nas respostas deste quiz. Não é uma medição científica nem um diagnóstico ideológico.</p>
+</div>
+
+<div class="card">
+<h2>O que significam esses termos?</h2>
+<p><b style="color:var(--lime)">Esquerda:</b> costuma enfatizar a redução das desigualdades, a proteção social, os serviços públicos e a redistribuição de renda.</p>
+<p><b style="color:var(--lime)">Extrema direita:</b> é uma categoria política distinta da direita convencional, frequentemente analisada em relação a autoritarismo, nacionalismo excludente, pluralismo e direitos. As posições variam entre movimentos e países.</p>
+<p class="small">Este quiz simplificado não é uma medição científica. O resultado indica apenas a faixa de afinidade definida pelas respostas e não substitui uma análise aprofundada.</p>
+</div>
+
+<div class="card">
+<h2>Fontes para conhecer os temas</h2>
+<p>Os links abaixo são fontes de referência para pesquisa. Eles contextualizam os assuntos, mas não provam que um candidato defenda exatamente cada posição. Consulte propostas oficiais e reportagens com data e contexto.</p>
+<div id="sources"></div>
+</div>
+
+<div class="controls">
+<button class="btn primary" id="restart">Refazer ↻</button>
+<button class="btn secondary" id="share">Compartilhar</button>
+</div>
+</section>
+<footer>VOTO CONSCIENTE · Informe-se. Questione. Escolha.</footer>
+</main>
+
 <script>
 const qs=[
 ["Economia","Você considera que o governo deve atuar para reduzir desigualdades por meio de impostos e programas sociais?","sim","IPEA — estudos sobre desigualdade","https://www.ipea.gov.br/portal/"],
@@ -50,29 +160,105 @@ const news=[
 {n:"19",topic:"Universidades e institutos federais",title:"Agência Brasil — Governo recompõe orçamento para educação e ciência",url:"https://agenciabrasil.ebc.com.br/educacao/noticia/2026-01/governo-recompoe-orcamento-para-educacao-e-ciencia",note:"Trata de recomposição orçamentária; não comprova corte de 90% no orçamento total."}
 ];
 
-// Coloque lula.jpeg e flavio.jpg na mesma pasta deste index.html no GitHub.
-// Usar caminhos relativos evita depender de links externos de imagem.
+// Coloque lula.jpeg e flavio.jpg na mesma pasta deste index.html.
 const leftImage = "./lula.jpeg";
 const rightImage = "./flavio.jpg";
-let i=0,a={};const $=x=>document.getElementById(x);
-function draw(){$('counter').textContent=`PERGUNTA ${i+1} / ${qs.length}`;$('pct').textContent=`${Math.round(Object.keys(a).length/qs.length*100)}% respondido`;$('progress').style.width=`${(i+1)/qs.length*100}%`;$('topic').textContent=qs[i][0];$('question').textContent=qs[i][1];document.querySelectorAll('[data-a]').forEach(b=>b.classList.toggle('selected',a[i]===b.dataset.a));$('back').disabled=i===0;$('next').disabled=a[i]===undefined;$('next').textContent=i===qs.length-1?'Ver resultado →':'Próxima →'}
-function finish(){ $('game').classList.add('hidden');$('result').classList.remove('hidden');
-/* 10 paired policy dimensions; each pair gives balanced influence to opposite ends. */
-let points=0;qs.forEach((q,j)=>{if(a[j]===q[2])points+=(j%2===0?1:-1)});let score=Math.round(50+points/20*50);score=Math.max(0,Math.min(100,score));
-$('score').textContent=score+'%';$('bar').style.width=score+'%';$('left').classList.toggle('active',score<50);$('extreme').classList.toggle('active',score>=50);
-const isLeft = score < 50;
-$('result-image').src = isLeft ? leftImage : rightImage;
-$('result-image').alt = isLeft ? 'Imagem ilustrativa de Lula associada à faixa de esquerda' : 'Imagem ilustrativa de Flávio Bolsonaro associada à faixa de extrema direita';
-$('result-image-caption').textContent = isLeft ? 'ESSE É O PRESIDENTE QUE O BRASIL MERECE!' : 'Imagem ilustrativa de Flávio Bolsonaro. A afinidade é calculada pelas respostas do quiz, não pela imagem.';
-$('result-image').onerror = () => { $('result-image-caption').textContent = 'Não foi possível carregar a imagem. Confira se o arquivo está na mesma pasta do index.html e se o nome está correto.'; }; 
-if(score<50){$('title').textContent='Maior afinidade com posições de esquerda';$('copy').textContent='Neste conjunto de perguntas, suas respostas se aproximam mais das posições de referência associadas à esquerda.'}else{$('title').textContent='Maior afinidade com posições de extrema direita';$('copy').textContent='Neste conjunto de perguntas, suas respostas se aproximam mais da faixa de referência definida para extrema direita. Este resultado é simplificado e não constitui uma avaliação científica de ideologia.'}
-$('sources').innerHTML=
-`<h3>Reportagens relacionadas às perguntas</h3><p class="small">As matérias oferecem contexto e não necessariamente comprovam a formulação integral de cada pergunta. Leia a reportagem completa e considere data, contexto e situação jurídica.</p>`+
-news.map((n,j)=>`<details><summary>${n.n}. ${n.topic}</summary><p><a href="${n.url}" target="_blank" rel="noopener noreferrer">${n.title} ↗</a></p><p>${n.note}</p></details>`).join('')+
-`<h3 style="margin-top:24px">Fontes gerais para aprofundamento</h3>`+
-qs.map((q,j)=>`<details><summary>${j+1}. ${q[0]} — fonte institucional</summary><p>${q[1]}</p><a href="${q[4]}" target="_blank" rel="noopener noreferrer">${q[3]} ↗</a></details>`).join('')}
-$('start').onclick=()=>{$('intro').classList.add('hidden');$('game').classList.remove('hidden');draw()};
-document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{a[i]=b.dataset.a;draw()});$('back').onclick=()=>{if(i>0){i--;draw()}};$('next').onclick=()=>{if(i<qs.length-1){i++;draw()}else finish()};
-$('restart').onclick=()=>{i=0;a={};$('result').classList.add('hidden');$('intro').classList.remove('hidden');draw()};
-$('share').onclick=async()=>{let text=`Meu resultado no Voto Consciente: ${$('title').textContent}. Quiz orientativo, não define meu voto.`;try{if(navigator.share)await navigator.share({title:'Voto Consciente',text});else{await navigator.clipboard.writeText(text);$('share').textContent='Texto copiado ✓'}}catch(e){}};
-</script></body></html>
+let i=0,a={};
+const $=x=>document.getElementById(x);
+
+function draw(){
+ $('counter').textContent=`PERGUNTA ${i+1} / ${qs.length}`;
+ $('pct').textContent=`${Math.round(Object.keys(a).length/qs.length*100)}% respondido`;
+ $('progress').style.width=`${(i+1)/qs.length*100}%`;
+ $('topic').textContent=qs[i][0];
+ $('question').textContent=qs[i][1];
+ document.querySelectorAll('[data-a]').forEach(b=>b.classList.toggle('selected',a[i]===b.dataset.a));
+ $('back').disabled=i===0;
+ $('next').disabled=a[i]===undefined;
+ $('next').textContent=i===qs.length-1?'Ver resultado →':'Próxima →';
+}
+
+function finish(){
+ $('game').classList.add('hidden');
+ $('result').classList.remove('hidden');
+
+ // Cada pergunta tem uma resposta de referência favorável à maior atuação pública.
+ // Todas as respostas têm o mesmo peso: 20 coincidências = 100%.
+ const matches = qs.reduce(
+   (total,q,j)=>total+(a[j]===q[2]?1:0),
+   0
+ );
+ const score = Math.round((matches/qs.length)*100);
+
+ // Duas faixas, conforme solicitado: sem opção de centro.
+ // 50% ou mais indica maior coincidência com as respostas de referência.
+ const isLeft = score >= 50;
+
+ $('score').textContent=score+'%';
+ $('bar').style.width=score+'%';
+ $('left').classList.toggle('active',isLeft);
+ $('extreme').classList.toggle('active',!isLeft);
+
+ $('result-image').src=isLeft?leftImage:rightImage;
+ $('result-image').alt=isLeft
+   ?'Imagem ilustrativa de Lula associada à faixa de esquerda'
+   :'Imagem ilustrativa de Flávio Bolsonaro associada à faixa de extrema direita';
+
+ $('result-image-caption').textContent=isLeft
+   ?'ESSE É O PRESIDENTE QUE O BRASIL MERECE!'
+   :'Imagem ilustrativa de Flávio Bolsonaro. A afinidade é calculada pelas respostas do quiz, não pela imagem.';
+
+ $('result-image').onerror=()=>{
+   $('result-image-caption').textContent='Não foi possível carregar a imagem. Confira se o arquivo está na mesma pasta do index.html e se o nome está correto.';
+ };
+
+ if(isLeft){
+   $('title').textContent='Maior afinidade com posições de esquerda';
+   $('copy').textContent=`Você coincidiu com ${matches} de ${qs.length} respostas de referência favoráveis à atuação pública. Este é um índice simplificado do quiz, não uma avaliação científica de ideologia.`;
+ }else{
+   $('title').textContent='Maior afinidade com o outro conjunto de respostas';
+   $('copy').textContent=`Você coincidiu com ${matches} de ${qs.length} respostas de referência. Neste quiz, o resultado fica na faixa chamada “extrema direita”, mas essa é uma simplificação definida pelo teste, não uma definição universal. Defender privatizações ou menor atuação estatal, isoladamente, não define extrema direita.`;
+ }
+
+ $('sources').innerHTML=
+ `<h3>Reportagens relacionadas às perguntas</h3><p class="small">As matérias oferecem contexto e não necessariamente comprovam a formulação integral de cada pergunta. Leia a reportagem completa e considere data, contexto e situação jurídica.</p>`+
+ news.map(n=>`<details><summary>${n.n}. ${n.topic}</summary><p><a href="${n.url}" target="_blank" rel="noopener noreferrer">${n.title} ↗</a></p><p>${n.note}</p></details>`).join('')+
+ `<h3 style="margin-top:24px">Fontes gerais para aprofundamento</h3>`+
+ qs.map((q,j)=>`<details><summary>${j+1}. ${q[0]} — fonte institucional</summary><p>${q[1]}</p><a href="${q[4]}" target="_blank" rel="noopener noreferrer">${q[3]} ↗</a></details>`).join('');
+}
+
+$('start').onclick=()=>{
+ $('intro').classList.add('hidden');
+ $('game').classList.remove('hidden');
+ draw();
+};
+
+document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{
+ a[i]=b.dataset.a;
+ draw();
+});
+
+$('back').onclick=()=>{if(i>0){i--;draw();}};
+$('next').onclick=()=>{if(i<qs.length-1){i++;draw();}else finish();};
+
+$('restart').onclick=()=>{
+ i=0;
+ a={};
+ $('result').classList.add('hidden');
+ $('intro').classList.remove('hidden');
+ draw();
+};
+
+$('share').onclick=async()=>{
+ let text=`Meu resultado no Voto Consciente: ${$('title').textContent}. Quiz orientativo, não define meu voto.`;
+ try{
+   if(navigator.share) await navigator.share({title:'Voto Consciente',text});
+   else{
+     await navigator.clipboard.writeText(text);
+     $('share').textContent='Texto copiado ✓';
+   }
+ }catch(e){}
+};
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-
+ 
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -20,7 +20,7 @@ h2{font-size:23px;line-height:1.2}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0}
 .meta{display:flex;justify-content:space-between;color:var(--lime);font-size:12px}
 .track,.bar{height:6px;background:#293023;border-radius:9px;overflow:hidden;margin:12px 0 22px}
-.fill,.bar span{display:block;height:100%;background:var(--lime)}
+.fill,.bar span{display:block;height:100%;background:var(--lime);transition:width .3s}
 .question{font-size:clamp(21px,5vw,28px);line-height:1.3;margin:24px 0}
 .answers,.controls{display:flex;gap:12px}
 .answers button,.btn{flex:1;border:1px solid #48513f;background:#191e16;color:var(--text);padding:15px;border-radius:12px;font-weight:800;cursor:pointer}
@@ -30,6 +30,10 @@ h2{font-size:23px;line-height:1.2}
 .hidden{display:none!important}
 .small{font-size:12px}
 .score{font-size:62px;color:var(--lime);font-weight:900}
+.result-scores{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}
+.result-score{border:1px solid var(--line);border-radius:12px;padding:15px;text-align:center}
+.result-score strong{display:block;color:var(--lime);font-size:32px;line-height:1.3}
+.result-score span{font-size:12px;color:var(--muted)}
 .scale{display:grid;grid-template-columns:1fr 1fr;gap:5px}
 .scale div{text-align:center;padding:9px 3px;border:1px solid var(--line);border-radius:8px;font-size:11px;color:var(--muted)}
 .scale .active{border-color:var(--lime);color:var(--lime)}
@@ -40,7 +44,12 @@ a{color:var(--lime)}
 .result-image{display:block;width:100%;max-height:340px;object-fit:cover;object-position:center;border-radius:12px;border:1px solid var(--line)}
 .image-caption{font-size:12px;margin:8px 0 0;color:var(--muted)}
 footer{text-align:center;color:#818a79;font-size:12px;margin-top:30px}
-@media(max-width:420px){.card{padding:18px}}
+@media(max-width:420px){
+ .card{padding:18px}
+ .result-scores{gap:8px}
+ .result-score{padding:10px 5px}
+ .result-score strong{font-size:27px}
+}
 </style>
 </head>
 <body>
@@ -53,10 +62,10 @@ footer{text-align:center;color:#818a79;font-size:12px;margin-top:30px}
 <section id="intro">
 <div class="kicker">AUTOCONHECIMENTO POLÍTICO</div>
 <h1>Com quais ideias você se identifica?</h1>
-<p>Responda a perguntas sobre economia, direitos, segurança e serviços públicos. O resultado mostra uma afinidade aproximada com posições políticas — não define sua identidade nem recomenda candidato.</p>
+<p>Responda a perguntas sobre economia, direitos, segurança e serviços públicos. No final, veja como suas respostas se alinham com dois conjuntos de posições políticas. O resultado é orientativo e não define sua identidade nem recomenda candidato.</p>
 <div class="card">
 <h2>Como interpretar</h2>
-<p>As perguntas apresentam posições diferentes sem tratar um lado como moralmente superior. O resultado indicará maior afinidade com esquerda ou extrema direita. Este é um quiz simplificado e não substitui uma análise aprofundada das posições políticas.</p>
+<p>As perguntas abordam diferentes posições políticas. O resultado apresenta dois percentuais de correspondência com as respostas de referência deste quiz. Eles não representam uma medição científica nem determinam, por si só, a ideologia de uma pessoa.</p>
 <button class="btn primary" id="start">Começar →</button>
 </div>
 </section>
@@ -82,27 +91,45 @@ footer{text-align:center;color:#818a79;font-size:12px;margin-top:30px}
 <section id="result" class="hidden">
 <div class="kicker">SEU RESULTADO</div>
 <h1>Sua afinidade política</h1>
+
 <div class="card">
-<div class="score" id="score"></div>
-<h2 id="title"></h2>
-<p id="copy"></p>
-<div class="result-image-wrap">
-<img id="result-image" class="result-image" src="./lula.jpeg" alt="Imagem ilustrativa associada à faixa de afinidade política">
-<p class="image-caption" id="result-image-caption">Imagem ilustrativa; não representa endosso nem recomendação de voto.</p>
+<h2>Seus percentuais de alinhamento</h2>
+<p>Veja como suas respostas correspondem aos dois conjuntos de referência usados no quiz.</p>
+
+<div class="result-scores">
+<div class="result-score">
+<strong id="left-score">0%</strong>
+<span>Posições associadas à esquerda</span>
 </div>
-<div class="bar"><span id="bar"></span></div>
+<div class="result-score">
+<strong id="opposite-score">0%</strong>
+<span>Conjunto de posições opostas</span>
+</div>
+</div>
+
+<div class="bar"><span id="bar" style="width:50%"></span></div>
+
 <div class="scale">
 <div id="left">ESQUERDA</div>
-<div id="extreme">EXTREMA DIREITA</div>
+<div id="extreme">CONJUNTO OPOSTO</div>
 </div>
-<p class="small">Índice orientativo baseado apenas nas respostas deste quiz. Não é uma medição científica nem um diagnóstico ideológico.</p>
+
+<h2 id="title"></h2>
+<p id="copy"></p>
+
+<div class="result-image-wrap">
+<img id="result-image" class="result-image" src="./lula.jpeg" alt="Imagem ilustrativa relacionada ao resultado">
+<p class="image-caption" id="result-image-caption">Imagem ilustrativa; não representa recomendação de voto.</p>
+</div>
+
+<p class="small">Os dois percentuais somam 100% porque cada pergunta tem duas respostas possíveis e é comparada com uma resposta de referência. O conjunto oposto não equivale automaticamente à extrema direita.</p>
 </div>
 
 <div class="card">
 <h2>O que significam esses termos?</h2>
 <p><b style="color:var(--lime)">Esquerda:</b> costuma enfatizar a redução das desigualdades, a proteção social, os serviços públicos e a redistribuição de renda.</p>
 <p><b style="color:var(--lime)">Extrema direita:</b> é uma categoria política distinta da direita convencional, frequentemente analisada em relação a autoritarismo, nacionalismo excludente, pluralismo e direitos. As posições variam entre movimentos e países.</p>
-<p class="small">Este quiz simplificado não é uma medição científica. O resultado indica apenas a faixa de afinidade definida pelas respostas e não substitui uma análise aprofundada.</p>
+<p class="small">O conjunto oposto usado no cálculo reúne respostas que contrariam as referências escolhidas para este quiz. Isso não significa que todas as pessoas que escolham essas respostas sejam de extrema direita.</p>
 </div>
 
 <div class="card">
@@ -116,6 +143,7 @@ footer{text-align:center;color:#818a79;font-size:12px;margin-top:30px}
 <button class="btn secondary" id="share">Compartilhar</button>
 </div>
 </section>
+
 <footer>VOTO CONSCIENTE · Informe-se. Questione. Escolha.</footer>
 </main>
 
@@ -136,7 +164,7 @@ const qs=[
 ["Segurança","Você prioriza prevenção e reinserção social junto à atuação policial no enfrentamento da criminalidade?","sim","Ministério da Justiça — segurança pública","https://www.gov.br/mj/pt-br"],
 ["Segurança","Você apoia ampliar o acesso legal de adultos a armas de fogo, com regras de controle e fiscalização?","nao","Polícia Federal — armas de fogo","https://www.gov.br/pf/pt-br/assuntos/armas"],
 ["Direitos civis","Você considera que o Estado deve proteger igualmente os direitos civis de grupos minoritários?","sim","Ministério dos Direitos Humanos","https://www.gov.br/mdh/pt-br"],
-["Costumes","Você prefere que políticas públicas deem maior peso à preservação de tradições culturais e religiosas quando houver conflito com mudanças sociais recentes?","nao","Câmara dos Deputados — debates legislativos","https://www.camara.leg.br/"],
+["Liberdade religiosa","Você concorda que uma pessoa seja perseguida ou discriminada por sua fé religiosa, mesmo quando suas crenças são diferentes das da maioria?","nao","Câmara dos Deputados — debates legislativos","https://www.camara.leg.br/"],
 ["Meio ambiente","Você apoia regras ambientais rigorosas para limitar impactos de empresas, mesmo que aumentem alguns custos de produção?","sim","Ministério do Meio Ambiente","https://www.gov.br/mma/pt-br"],
 ["Meio ambiente","Você prefere flexibilizar regras ambientais para facilitar investimentos, mantendo exigências legais básicas?","nao","Ministério do Meio Ambiente","https://www.gov.br/mma/pt-br"],
 ["Empresas estatais","Você prefere manter sob controle público empresas consideradas estratégicas, como petróleo e energia?","sim","Ministério de Minas e Energia","https://www.gov.br/mme/pt-br"],
@@ -163,6 +191,7 @@ const news=[
 // Coloque lula.jpeg e flavio.jpg na mesma pasta deste index.html.
 const leftImage = "./lula.jpeg";
 const rightImage = "./flavio.jpg";
+
 let i=0,a={};
 const $=x=>document.getElementById(x);
 
@@ -172,7 +201,11 @@ function draw(){
  $('progress').style.width=`${(i+1)/qs.length*100}%`;
  $('topic').textContent=qs[i][0];
  $('question').textContent=qs[i][1];
- document.querySelectorAll('[data-a]').forEach(b=>b.classList.toggle('selected',a[i]===b.dataset.a));
+
+ document.querySelectorAll('[data-a]').forEach(b=>
+   b.classList.toggle('selected',a[i]===b.dataset.a)
+ );
+
  $('back').disabled=i===0;
  $('next').disabled=a[i]===undefined;
  $('next').textContent=i===qs.length-1?'Ver resultado →':'Próxima →';
@@ -182,49 +215,74 @@ function finish(){
  $('game').classList.add('hidden');
  $('result').classList.remove('hidden');
 
- // Cada pergunta tem uma resposta de referência favorável à maior atuação pública.
- // Todas as respostas têm o mesmo peso: 20 coincidências = 100%.
- const matches = qs.reduce(
+ // Conta as respostas coincidentes com as referências do quiz.
+ const leftMatches=qs.reduce(
    (total,q,j)=>total+(a[j]===q[2]?1:0),
    0
  );
- const score = Math.round((matches/qs.length)*100);
 
- // Duas faixas, conforme solicitado: sem opção de centro.
- // 50% ou mais indica maior coincidência com as respostas de referência.
- const isLeft = score >= 50;
+ // O conjunto oposto corresponde às respostas diferentes da referência.
+ const oppositeMatches=qs.length-leftMatches;
 
- $('score').textContent=score+'%';
- $('bar').style.width=score+'%';
- $('left').classList.toggle('active',isLeft);
- $('extreme').classList.toggle('active',!isLeft);
+ const leftScore=Math.round((leftMatches/qs.length)*100);
+ const oppositeScore=100-leftScore;
+
+ $('left-score').textContent=leftScore+'%';
+ $('opposite-score').textContent=oppositeScore+'%';
+
+ // A barra representa a divisão entre os dois conjuntos.
+ $('bar').style.width=leftScore+'%';
+
+ $('left').classList.toggle('active',leftScore>=oppositeScore);
+ $('extreme').classList.toggle('active',oppositeScore>leftScore);
+
+ const isLeft=leftScore>=oppositeScore;
 
  $('result-image').src=isLeft?leftImage:rightImage;
  $('result-image').alt=isLeft
-   ?'Imagem ilustrativa de Lula associada à faixa de esquerda'
-   :'Imagem ilustrativa de Flávio Bolsonaro associada à faixa de extrema direita';
+   ?'Imagem ilustrativa relacionada às posições de referência associadas à esquerda'
+   :'Imagem ilustrativa relacionada ao conjunto oposto de posições';
 
- $('result-image-caption').textContent=isLeft
-   ?'ESSE É O PRESIDENTE QUE O BRASIL MERECE!'
-   :'Imagem ilustrativa de Flávio Bolsonaro. A afinidade é calculada pelas respostas do quiz, não pela imagem.';
+ $('result-image-caption').textContent=
+   'Imagem ilustrativa; não representa recomendação de voto.';
 
  $('result-image').onerror=()=>{
-   $('result-image-caption').textContent='Não foi possível carregar a imagem. Confira se o arquivo está na mesma pasta do index.html e se o nome está correto.';
+   $('result-image-caption').textContent=
+     'Não foi possível carregar a imagem. Confira se o arquivo está na mesma pasta do index.html e se o nome está correto.';
  };
 
- if(isLeft){
-   $('title').textContent='Maior afinidade com posições de esquerda';
-   $('copy').textContent=`Você coincidiu com ${matches} de ${qs.length} respostas de referência favoráveis à atuação pública. Este é um índice simplificado do quiz, não uma avaliação científica de ideologia.`;
+ if(leftScore===oppositeScore){
+   $('title').textContent='Afinidade dividida entre os dois conjuntos';
+   $('copy').textContent=
+     `Suas respostas correspondem a ${leftScore}% das referências associadas à esquerda e ${oppositeScore}% do conjunto oposto.`;
+ }else if(isLeft){
+   $('title').textContent='Maior correspondência com posições associadas à esquerda';
+   $('copy').textContent=
+     `Você tem ${leftScore}% de alinhamento com as posições de referência associadas à esquerda e ${oppositeScore}% com o conjunto oposto.`;
  }else{
-   $('title').textContent='Maior afinidade com o outro conjunto de respostas';
-   $('copy').textContent=`Você coincidiu com ${matches} de ${qs.length} respostas de referência. Neste quiz, o resultado fica na faixa chamada “extrema direita”, mas essa é uma simplificação definida pelo teste, não uma definição universal. Defender privatizações ou menor atuação estatal, isoladamente, não define extrema direita.`;
+   $('title').textContent='Maior correspondência com o conjunto oposto';
+   $('copy').textContent=
+     `Você tem ${oppositeScore}% de alinhamento com o conjunto de posições opostas às referências associadas à esquerda e ${leftScore}% com as referências associadas à esquerda. Isso não significa, por si só, que você seja de extrema direita.`;
  }
 
  $('sources').innerHTML=
- `<h3>Reportagens relacionadas às perguntas</h3><p class="small">As matérias oferecem contexto e não necessariamente comprovam a formulação integral de cada pergunta. Leia a reportagem completa e considere data, contexto e situação jurídica.</p>`+
- news.map(n=>`<details><summary>${n.n}. ${n.topic}</summary><p><a href="${n.url}" target="_blank" rel="noopener noreferrer">${n.title} ↗</a></p><p>${n.note}</p></details>`).join('')+
+ `<h3>Reportagens relacionadas às perguntas</h3>
+ <p class="small">As matérias oferecem contexto e não necessariamente comprovam a formulação integral de cada pergunta. Leia a reportagem completa e considere data, contexto e situação jurídica.</p>`+
+ news.map(n=>
+   `<details>
+     <summary>${n.n}. ${n.topic}</summary>
+     <p><a href="${n.url}" target="_blank" rel="noopener noreferrer">${n.title} ↗</a></p>
+     <p>${n.note}</p>
+   </details>`
+ ).join('')+
  `<h3 style="margin-top:24px">Fontes gerais para aprofundamento</h3>`+
- qs.map((q,j)=>`<details><summary>${j+1}. ${q[0]} — fonte institucional</summary><p>${q[1]}</p><a href="${q[4]}" target="_blank" rel="noopener noreferrer">${q[3]} ↗</a></details>`).join('');
+ qs.map((q,j)=>
+   `<details>
+     <summary>${j+1}. ${q[0]} — fonte institucional</summary>
+     <p>${q[1]}</p>
+     <a href="${q[4]}" target="_blank" rel="noopener noreferrer">${q[3]} ↗</a>
+   </details>`
+ ).join('');
 }
 
 $('start').onclick=()=>{
@@ -233,13 +291,28 @@ $('start').onclick=()=>{
  draw();
 };
 
-document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{
- a[i]=b.dataset.a;
- draw();
+document.querySelectorAll('[data-a]').forEach(b=>{
+ b.onclick=()=>{
+   a[i]=b.dataset.a;
+   draw();
+ };
 });
 
-$('back').onclick=()=>{if(i>0){i--;draw();}};
-$('next').onclick=()=>{if(i<qs.length-1){i++;draw();}else finish();};
+$('back').onclick=()=>{
+ if(i>0){
+   i--;
+   draw();
+ }
+};
+
+$('next').onclick=()=>{
+ if(i<qs.length-1){
+   i++;
+   draw();
+ }else{
+   finish();
+ }
+};
 
 $('restart').onclick=()=>{
  i=0;
@@ -250,10 +323,13 @@ $('restart').onclick=()=>{
 };
 
 $('share').onclick=async()=>{
- let text=`Meu resultado no Voto Consciente: ${$('title').textContent}. Quiz orientativo, não define meu voto.`;
+ const text=
+   `Meu resultado no Voto Consciente: ${$('left-score').textContent} de alinhamento com posições associadas à esquerda e ${$('opposite-score').textContent} com o conjunto oposto. Quiz orientativo, não define meu voto.`;
+
  try{
-   if(navigator.share) await navigator.share({title:'Voto Consciente',text});
-   else{
+   if(navigator.share){
+     await navigator.share({title:'Voto Consciente',text});
+   }else{
      await navigator.clipboard.writeText(text);
      $('share').textContent='Texto copiado ✓';
    }
